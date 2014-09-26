@@ -2,7 +2,7 @@ function clickHandler(e)
 {
     chrome.extension.sendMessage({directive: "comparisonClick"}, function(response) 
     {
-        //this.close(); // close the popup when the background finishes processing request
+        this.close(); // close the popup when the background finishes processing request
     });
 }
 
