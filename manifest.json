@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "MultiLineFinder",
+    "version": "1.0",
+    "browser_action": {
+    "default_icon": "person.png",
+    "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*","https://*/*"],
+            "js": ["jquery-2.1.1.min.js", "contentscript.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "description": "Find multiple lines you want to search from web site",
+    "permissions": ["tabs", "http://*/*", "https://*/*", "<all_urls>"]
+}
