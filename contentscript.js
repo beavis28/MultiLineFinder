@@ -1,5 +1,6 @@
-chrome.extension.onRequest.addListener(function(request, sender, callback) {
+chrome.runtime.onMessage.addListener(function(request, sender, callback) {
     if (request.action == "getSource") {
-        callback(document.getElementsByTagName('body')[0].innerHTML);
+        callback(document.documentElement.outerHTML);
+    	//callback(document.getElementsByTagName('html')[0].innerHTML);
     }
 });

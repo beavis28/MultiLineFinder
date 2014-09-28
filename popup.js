@@ -9,10 +9,10 @@ function clickHandler(e)
         //this.close(); // close the popup when the background finishes processing request
     });
     var bg = chrome.extension.getBackgroundPage();
-	var cont = bg.result;
+	var cont = bg.html_page;
 	if (cont != null)
 	{
-		document.write("found result:");
+		//document.write("found result:");
     	document.write(cont);
 	}
 	else

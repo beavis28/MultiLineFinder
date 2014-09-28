@@ -1,4 +1,5 @@
 var result = "";
+var html_page = "";
 
 function takeComparison(ts, s)
 {
@@ -8,8 +9,9 @@ function takeComparison(ts, s)
 		var line = lines[i];
 		if (line != null)
 		{
-			var ret = s.search(line);
-			if (ret != -1)
+			var re = new RegExp(line, "i");
+			var ret = s.match(re);
+			if (ret != null)
 			{
 				result = result + line + "\n";
 			}
@@ -41,16 +43,19 @@ chrome.extension.onMessage.addListener(
             	
             	//
                 chrome.tabs.query ({
-                    active: true,               // Select active tabs
-                    lastFocusedWindow: true     // In the current window
+                	active: true,               // Select active tabs
+                	currentWindow: true     // In the current window
                     }, function (tabs) {
                     var tab = tabs[0];
-                    chrome.tabs.sendRequest(tab.id, {action: "getSource"}, function(source) 
+                    chrome.tabs.sendMessage(tab.id, {action: "getSource"}, function(source) 
                     {
                     	result = "";
+                    	html_page = "";
                     	takeComparison(text, source);
+                    	html_page = source;
                     });
                 });
+                
                 
 
             }
