@@ -13,9 +13,7 @@
             "run_at": "document_end"
         }
     ],
-    "background": {
-        "scripts": ["background.js"]
-    },
+
     "description": "Find multiple lines you want to search from web site",
-    "permissions": ["activeTab", "http://*/*", "https://*/*", "<all_urls>"]
+    "permissions": ["tabs", "http://*/*", "https://*/*", "<all_urls>"]
 }

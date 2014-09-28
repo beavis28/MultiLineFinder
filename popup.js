@@ -1,24 +1,45 @@
 
 var text_area = "";
+var contents = "";
+var result = "";
+
+function takeComparison(ts, s)
+{
+	var lines = ts.split("\n");
+	for(var i = 0; i < lines.length; i ++)
+	{
+		var line = lines[i];
+		if (line != null)
+		{
+			var re = new RegExp(line, "i");
+			var ret = s.match(re);
+			if (ret != null)
+			{
+				result = result + line + "\n";
+			}
+		}
+	}
+}
+
+chrome.extension.onMessage.addListener(function(request, sender) {
+	  if (request.action == "getSource") {
+		  contents = request.source;
+	      takeComparison(text_area, contents);
+	      document.write(contents);
+	  }
+	});
 
 function clickHandler(e) 
 {
 	text_area = document.getElementById('lines').value;
-    chrome.extension.sendMessage({directive: "comparisonClick"}, function(response) 
-    {
-        //this.close(); // close the popup when the background finishes processing request
-    });
-    var bg = chrome.extension.getBackgroundPage();
-	var cont = bg.html_page;
-	if (cont != null)
-	{
-		//document.write("found result:");
-    	document.write(cont);
-	}
-	else
-	{
-		document.write("not found");
-	}
+	chrome.tabs.executeScript(null, {
+	    file: "contentscript.js"
+	  }, function() {
+	    // If you try and inject into an extensions page or the webstore/NTP you'll get an error
+	    if (chrome.extension.lastError) {
+	      message.innerText = 'There was an error injecting script : \n' + chrome.extension.lastError.message;
+	    }
+	  });
 }
 
 document.addEventListener('DOMContentLoaded', function () 
